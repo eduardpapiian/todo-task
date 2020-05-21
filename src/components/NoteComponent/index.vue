@@ -40,12 +40,12 @@ export default {
   },
   methods: {
     deleteNote(note) {
-      this.$refs.modalComponent.deleteNoteOpenModal(note)
+      this.$refs.modalComponent.deleteNoteOpenModal(note);
       this.showModal = true
     },
     closeModal() {
-      this.showModal = false
-      this.$refs.modalComponent.action = ''
+      this.showModal = false;
+      this.$refs.modalComponent.action = '';
       this.$refs.modalComponent.note = {}
     }
   }

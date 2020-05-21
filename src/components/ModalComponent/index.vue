@@ -34,27 +34,27 @@ export default {
   },
   methods: {
     deleteNoteOpenModal(note) {
-      this.note = note
-      this.action = 'deleteNote'
+      this.note = note;
+      this.action = 'deleteNote';
       this.text = `Delete ${note.title} ?`
     },
     cancelEditNoteOpenModal(note) {
-      this.note = note
-      this.action = 'cancelEditNote'
+      this.note = note;
+      this.action = 'cancelEditNote';
       this.text = `Cancel ?`
     },
     confirm() {
       // if delete note
       if (this.action === 'deleteNote') {
-        const notes = JSON.parse(localStorage.getItem('notes'))
-        const notesAfterDeletion = notes.filter(val => val.id !== this.note.id)
+        const notes = JSON.parse(localStorage.getItem('notes'));
+        const notesAfterDeletion = notes.filter(val => val.id !== this.note.id);
 
         this.$store.dispatch('setNotes', notesAfterDeletion).then(notes => {
           localStorage.setItem('notes', JSON.stringify(notes))
-        })
+        });
 
         // check if user on main page
-        console.log('route', this.$route)
+        console.log('route', this.$route);
         if (this.$route.name !== 'dashboard') {
           this.$router.push('/')
         }

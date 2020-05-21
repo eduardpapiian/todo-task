@@ -10,7 +10,7 @@
 </template>
 
 <script>
-const checkedIcon = require('@/assets/checked.png')
+const checkedIcon = require('@/assets/checked.png');
 export default {
   name: 'Todo',
   props: {

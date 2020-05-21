@@ -53,7 +53,7 @@
 </template>
 
 <script>
-const deleteIcon = require('../../assets/x.svg')
+const deleteIcon = require('../../assets/x.svg');
 import ModalComponent from '@/components/ModalComponent'
 
 export default {
@@ -93,9 +93,9 @@ export default {
   },
   methods: {
     getCurrentNote(noteId) {
-      const note = JSON.parse(localStorage.getItem('notes')).filter(val => val.id === Number(noteId))[0]
+      const note = JSON.parse(localStorage.getItem('notes')).filter(val => val.id === Number(noteId))[0];
       if (!note) {
-        this.status = 'Create'
+        this.status = 'Create';
         // get last unique id
         this.note.id = JSON.parse(localStorage.getItem('notes'))[JSON.parse(localStorage.getItem('notes')).length - 1].id + 1
       } else {
@@ -117,31 +117,31 @@ export default {
     },
     async saveNote(note) {
       try {
-        this.errors = await this.validateForm(note)
+        this.errors = await this.validateForm(note);
         if (!this.errors.length) {
-          const notesFromStorage = JSON.parse(localStorage.getItem('notes'))
+          const notesFromStorage = JSON.parse(localStorage.getItem('notes'));
           // handle if edit or create new note
-          let newNotes = []
+          let newNotes = [];
           if (this.status === 'Edit') {
             const changedNotes = notesFromStorage.filter(function(val) {
               if (val.id === note.id) {
-                val.title = note.title
+                val.title = note.title;
                 val.todos = note.todos
               }
               return val
             })
             newNotes = changedNotes
           } else {
-            notesFromStorage.push(note)
+            notesFromStorage.push(note);
             newNotes = notesFromStorage
           }
           // save new notes
-          localStorage.setItem('notes', JSON.stringify(newNotes))
-          await this.$store.dispatch('setNotes', newNotes)
+          localStorage.setItem('notes', JSON.stringify(newNotes));
+          await this.$store.dispatch('setNotes', newNotes);
 
-          this.successMessage = this.status === 'Edit' ? 'Note successfully changed!' : 'Note successfully created!'
+          this.successMessage = this.status === 'Edit' ? 'Note successfully changed!' : 'Note successfully created!';
           setTimeout(() => {
-            this.successMessage = ''
+            this.successMessage = '';
             if (this.status !== 'Edit') {
               this.$router.push('/')
             }
@@ -152,40 +152,40 @@ export default {
       }
     },
     validateForm(note) {
-      const errors = []
+      const errors = [];
       // check if empty title
       if (!note.title) {
         errors.push('Title is required!')
       }
       // check if empty text in todo
-      const even = (element) => element.text === ''
-      const ifEmptyTodo = note.todos.some(even)
+      const even = (element) => element.text === '';
+      const ifEmptyTodo = note.todos.some(even);
       if (ifEmptyTodo) {
         errors.push('Todo Text is required!')
       }
       return errors
     },
     deleteNote(note) {
-      this.$refs.modalComponent.deleteNoteOpenModal(note)
+      this.$refs.modalComponent.deleteNoteOpenModal(note);
       this.showModal = true
     },
     cancel(note) {
-      this.$refs.modalComponent.cancelEditNoteOpenModal(note)
+      this.$refs.modalComponent.cancelEditNoteOpenModal(note);
       this.showModal = true
     },
     cancelChanges(note) {
-      this.editableNote = note
-      const oldNote = JSON.parse(localStorage.getItem('notes')).filter(val => val.id === Number(note.id))[0]
-      this.note = oldNote
+      this.editableNote = note;
+      const oldNote = JSON.parse(localStorage.getItem('notes')).filter(val => val.id === Number(note.id))[0];
+      this.note = oldNote;
       this.cancelChange = true
     },
     repeatCancelChanges(editableNote) {
-      this.note = editableNote
+      this.note = editableNote;
       this.cancelChange = false
     },
     closeModal() {
-      this.showModal = false
-      this.$refs.modalComponent.action = ''
+      this.showModal = false;
+      this.$refs.modalComponent.action = '';
       this.$refs.modalComponent.note = {}
     }
   }
