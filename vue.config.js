@@ -6,7 +6,7 @@ function resolve(dir) {
 }
 
 const name = 'todo-text.com';
-const port = 9522 // dev port
+const port = 9522;// dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
