@@ -6,12 +6,14 @@ Vue.use(Router)
 export const constantRoutes = [
   {
     path: '/',
+    name: 'dashboard',
     component: () => import('@/views/index.vue')
   },
 
   {
-    path: '/edit-note',
-    component: () => import('@/views/edit-note')
+    path: '/note/:id',
+    name: 'note',
+    component: () => import('@/views/note')
   }
 ]
 

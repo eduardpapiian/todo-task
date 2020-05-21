@@ -2,6 +2,13 @@
   <div class="wrapper">
     <div class="wrapper_content">
       <h1>Notes</h1>
+        <div>
+            <router-link class="add-note" to="/note/create">
+              <div class="add-note-btn" >
+                add note
+              </div>
+            </router-link>
+        </div>
         <div class="note_wrapper" v-for="note in notes" :key="note.id">
             <Note :note="note" />
         </div>
@@ -17,49 +24,13 @@ export default {
   components: {
     Note
   },
+  computed: {
+    notes() {
+      return this.$store.getters.setDefaultNotes
+    }
+  },
   data() {
     return {
-      notes: [
-        {
-          id: 1,
-          title: 'Title - 1',
-          todos: [
-            { id: 1, text: 'todo-1.1', checked: true },
-            { id: 2, text: 'todo-1.2', checked: false },
-            { id: 3, text: 'todo-1.3', checked: false },
-            { id: 4, text: 'todo-1.4', checked: false }
-          ]
-        },
-        {
-          id: 2,
-          title: 'Title - 2',
-          todos: [
-            { id: 1, text: 'todo-2.1', checked: true },
-            { id: 2, text: 'todo-2.2', checked: false },
-            { id: 3, text: 'todo-2.3', checked: false },
-            { id: 4, text: 'todo-2.4', checked: false }
-          ]
-        },
-        {
-          id: 3,
-          title: 'Title - 3',
-          todos: [
-            { id: 1, text: 'todo-3.1', checked: true },
-            { id: 2, text: 'todo-3.2', checked: false },
-            { id: 3, text: 'todo-3.3', checked: false },
-            { id: 4, text: 'todo-3.4', checked: false }
-          ]
-        },
-        {
-          id: 4,
-          title: 'Title - 4',
-          todos: [
-            { id: 1, text: 'todo-4.1', checked: true },
-            { id: 2, text: 'todo-4.2', checked: false },
-            { id: 3, text: 'todo-4.3', checked: false },
-            { id: 4, text: 'todo-4.4', checked: false }
-          ]
-        }]
     }
   }
 }
@@ -70,6 +41,18 @@ export default {
         &_content{
             max-width: 600px;
             margin: 0 auto;
+          .add-note{
+            text-decoration:none;
+            color:black;
+            &-btn{
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+              padding:10px;
+              margin:10px;
+              &:hover{
+                cursor:pointer;
+              }
+            }
+          }
         }
         .note_wrapper{
             display: flex;

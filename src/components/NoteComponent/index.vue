@@ -3,20 +3,29 @@
     <div class="note__header">
       <h4 class="note__header_title">{{ note.title }}</h4>
       <div class="note__header_actions">
-        <span class="edit-btn button">edit</span>
-        <span class="delete-btn button">delete</span>
+        <router-link class="edit-btn button" :to="`/note/${note.id}`">
+          edit
+        </router-link>
+        <span @click="deleteNote(note)" class="delete-btn button">delete</span>
       </div>
     </div>
-    <Todo v-for="todo in note.todos" :key="todo.id" :todo="todo" />
+    <Todo v-for="todo in note.todos.slice(0, 3)" :key="todo.id" :todo="todo" />
+    <div v-if="note.todos.length > 3" class="dots">
+      ...
+    </div>
+    <ModalComponent v-show="showModal" ref="modalComponent" @closeModal="closeModal"/>
   </div>
 </template>
 
 <script>
 import Todo from '@/components/TodoComponent'
+import ModalComponent from '@/components/ModalComponent'
+
 export default {
   name: 'Note',
   components: {
-    Todo
+    Todo,
+    ModalComponent
   },
   props: {
     note: {
@@ -26,7 +35,18 @@ export default {
   },
   data() {
     return {
-
+      showModal: false
+    }
+  },
+  methods: {
+    deleteNote(note) {
+      this.$refs.modalComponent.deleteNoteOpenModal(note)
+      this.showModal = true
+    },
+    closeModal() {
+      this.showModal = false
+      this.$refs.modalComponent.action = ''
+      this.$refs.modalComponent.note = {}
     }
   }
 }
@@ -62,12 +82,19 @@ export default {
           }
         }
         .edit-btn{
+          color:black;
+          text-decoration:none;
           background-color: #C9D6FF;
         }
         .delete-btn{
+          color:black;
           background-color: rgba(255, 0, 0, 0.4);
         }
       }
+    }
+    .dots{
+      display:flex;
+      font-size:20px;
     }
   }
 </style>
